@@ -1,0 +1,44 @@
+{% set name = "bluesky-live" %}
+{% set version = "0.0.6" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: "https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz"
+  sha256: 97722f90e851b8a173ab8d4098646c56be0d362a7c767c788bdb8ab0a1a889d2
+
+build:
+  number: 0
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . -vv"
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dask[array] >=2
+    - entrypoints
+    - event-model >=1.16.0
+    - numpy
+    - pandas
+    - python
+    - xarray
+
+test:
+  requires:
+    - pytest
+  imports:
+    - bluesky_live
+    - bluesky_live.tests
+  commands:
+    - pytest --pyargs bluesky_live.tests
+
+about:
+  home: "https://github.com/bluesky/bluesky-live"
+  license: "BSD (3-clause)"
+  license_family: BSD
+  license_file: LICENSE
+  summary: "Prototype building blocks for working with streaming data in bluesky"
