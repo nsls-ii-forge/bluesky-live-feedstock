@@ -24,11 +24,17 @@ requirements:
     - dask-core >=2
     - entrypoints
     - event-model >=1.16.0
-    - fsspec
     - numpy
     - pandas
-    - toolz
     - xarray
+    # TODO: remove these dependencies once they are fixed in
+    # https://anaconda.org/anaconda/dask-core/files.  See
+    # https://github.com/conda-forge/dask-core-feedstock/pull/93/files for more
+    # details.
+    - cloudpickle >=1.1.1
+    - fsspec >=0.6.0
+    - partd >=0.3.10
+    - toolz >=0.8.2
 
 test:
   requires:
