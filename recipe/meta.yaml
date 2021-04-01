@@ -26,6 +26,7 @@ requirements:
     - event-model >=1.16.0
     - numpy
     - pandas
+    - toolz
     - xarray
 
 test:
