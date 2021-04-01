@@ -1,5 +1,6 @@
 {% set name = "bluesky-live" %}
 {% set version = "0.0.7" %}
+{% set sha256 = "2cfefc97ca2ca6bdfdf3be67a6c28a1811549a72aa919d3f84e4dedb4e526f9c" %}
 
 package:
   name: {{ name|lower }}
@@ -7,38 +8,48 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 2cfefc97ca2ca6bdfdf3be67a6c28a1811549a72aa919d3f84e4dedb4e526f9c
+  sha256: {{ sha256 }}
 
 build:
-  number: 0
+  number: 1
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps
 
 requirements:
   host:
+    - python >=3.6
     - pip
-    - python
   run:
-    - dask[array] >=2
+    - python >=3.6
+    - dask-core >=2
     - entrypoints
     - event-model >=1.16.0
     - numpy
     - pandas
-    - python
     - xarray
+    # TODO: remove these dependencies once they are fixed in
+    # https://anaconda.org/anaconda/dask-core/files.  See
+    # https://github.com/conda-forge/dask-core-feedstock/pull/93/files for more
+    # details.
+    - cloudpickle >=1.1.1
+    - fsspec >=0.6.0
+    - partd >=0.3.10
+    - toolz >=0.8.2
 
 test:
   requires:
+    - pip
     - pytest
   imports:
     - bluesky_live
     - bluesky_live.tests
   commands:
     - pytest --pyargs bluesky_live.tests
+    - pip check
 
 about:
   home: https://github.com/bluesky/bluesky-live
-  license: BSD (3-clause)
+  license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE
   summary: Prototype building blocks for working with streaming data in bluesky
