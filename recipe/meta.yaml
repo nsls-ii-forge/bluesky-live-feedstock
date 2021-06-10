@@ -1,6 +1,6 @@
 {% set name = "bluesky-live" %}
-{% set version = "0.0.7" %}
-{% set sha256 = "2cfefc97ca2ca6bdfdf3be67a6c28a1811549a72aa919d3f84e4dedb4e526f9c" %}
+{% set version = "0.0.8" %}
+{% set sha256 = "94f2b71016e9e87f08a901a57145df0bfae5234641c086a001ca463483ae8940" %}
 
 package:
   name: {{ name|lower }}
@@ -11,16 +11,16 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps
 
 requirements:
   host:
-    - python >=3.6
+    - python >=3.6,!=3.9.5
     - pip
   run:
-    - python >=3.6
+    - python >=3.6,!=3.9.5
     - dask-core >=2
     - entrypoints
     - event-model >=1.16.0
@@ -39,12 +39,12 @@ requirements:
 test:
   requires:
     - pip
-    - pytest
+    # - pytest
   imports:
     - bluesky_live
     - bluesky_live.tests
   commands:
-    - pytest --pyargs bluesky_live.tests
+    # - pytest --pyargs bluesky_live.tests
     - pip check
 
 about:
